@@ -1,0 +1,20 @@
+<%-include('navbar')-%>
+<h1>My Purchased Item</h1>
+
+<div class="container">
+<div class="row">
+  <% for(i in purchasedItem) {%>
+    <div class="col-md-4">
+      <div class="card" style="width: 18rem;">
+        <img src="<%= purchasedItem[i].image%>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= purchasedItem[i].name%></h5>
+          <p class="card-text"><%= purchasedItem[i].description%></p>
+          <p id="itemid"><%= purchasedItem[i].itemId%></p>
+          <h6>Price with fee : <%= purchasedItem[i].totalPrice%></h6>
+        </div>
+      </div>
+    </div>
+  <% } %>
+  </div>
+  </div>

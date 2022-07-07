@@ -1,0 +1,294 @@
+account_financial_report.py   ---- table 
+
+
+
+{
+    "originalEvent": {
+        "isTrusted": true
+    },
+    "type": "click",
+    "target": {
+        "jQuery331048493278974371771": {
+            "events": {
+                "click": [
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "data": null,
+                        "guid": 271,
+                        "namespace": ""
+                    }
+                ]
+            }
+        },
+        "jQuery331048493278974371772": {
+            "filter": "no_comparison"
+        }
+    },
+    "currentTarget": {},
+    "relatedTarget": null,
+    "timeStamp": 342237.9000000004,
+    "jQuery33104849327897437177": true,
+    "delegateTarget": {
+        "jQuery331048493278974371771": {
+            "events": {
+                "input": [
+                    {
+                        "type": "input",
+                        "origType": "input",
+                        "guid": 61,
+                        "selector": ".o_account_reports_filter_input",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    }
+                ],
+                "click": [
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 62,
+                        "selector": ".o_account_reports_summary",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 63,
+                        "selector": ".js_account_report_save_summary",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 64,
+                        "selector": ".o_account_reports_footnote_icons",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 65,
+                        "selector": ".js_account_reports_add_footnote",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 66,
+                        "selector": ".js_account_report_foldable",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 67,
+                        "selector": "[action]",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 68,
+                        "selector": ".o_account_reports_load_more span",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 69,
+                        "selector": ".o_account_reports_table thead th",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 70,
+                        "selector": ".o_change_expected_date",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 71,
+                        "selector": ".o_search_options .dropdown-menu",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    }
+                ]
+            }
+        },
+        "sizzle1641461272339": {
+            "undefined": {
+                "parentNode": [
+                    2788,
+                    73,
+                    true
+                ]
+            }
+        }
+    },
+    "handleObj": {
+        "type": "click",
+        "origType": "click",
+        "guid": 71,
+        "selector": ".o_search_options .dropdown-menu",
+        "needsContext": false,
+        "namespace": "widget_events"
+    }
+}
+
+
+===================
+
+{
+    "originalEvent": {
+        "isTrusted": true
+    },
+    "type": "click",
+    "target": {
+        "jQuery331048493278974371771": {
+            "events": {
+                "click": [
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "data": null,
+                        "guid": 336,
+                        "namespace": ""
+                    }
+                ]
+            }
+        },
+        "jQuery331048493278974371772": {
+            "filter": "no_comparison11"
+        }
+    },
+    "currentTarget": {},
+    "relatedTarget": null,
+    "timeStamp": 402533.9000000004,
+    "jQuery33104849327897437177": true,
+    "delegateTarget": {
+        "jQuery331048493278974371771": {
+            "events": {
+                "input": [
+                    {
+                        "type": "input",
+                        "origType": "input",
+                        "guid": 61,
+                        "selector": ".o_account_reports_filter_input",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    }
+                ],
+                "click": [
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 62,
+                        "selector": ".o_account_reports_summary",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 63,
+                        "selector": ".js_account_report_save_summary",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 64,
+                        "selector": ".o_account_reports_footnote_icons",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 65,
+                        "selector": ".js_account_reports_add_footnote",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 66,
+                        "selector": ".js_account_report_foldable",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 67,
+                        "selector": "[action]",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 68,
+                        "selector": ".o_account_reports_load_more span",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 69,
+                        "selector": ".o_account_reports_table thead th",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 70,
+                        "selector": ".o_change_expected_date",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    },
+                    {
+                        "type": "click",
+                        "origType": "click",
+                        "guid": 71,
+                        "selector": ".o_search_options .dropdown-menu",
+                        "needsContext": false,
+                        "namespace": "widget_events"
+                    }
+                ]
+            }
+        },
+        "sizzle1641461272339": {
+            "undefined": {
+                "parentNode": [
+                    3294,
+                    73,
+                    true
+                ]
+            }
+        }
+    },
+    "handleObj": {
+        "type": "click",
+        "origType": "click",
+        "guid": 71,
+        "selector": ".o_search_options .dropdown-menu",
+        "needsContext": false,
+        "namespace": "widget_events"
+    }
+}

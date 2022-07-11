@@ -37,31 +37,42 @@ async function ipfsClient() {
 
 
 async function saveFile(file, name, price, description) {
-    let ipfs = await ipfsClient();
-    data = file.data
-    let result = await ipfs.add(data);
-    metadata = {
-        "description": description,
-        "image": "https://ipfs.io/ipfs/"+result.path,
-        "name": name,
-        "price" : price
+    try{
+        let ipfs = await ipfsClient();
+        data = file.data
+        let result = await ipfs.add(data);
+        metadata = {
+            "description": description,
+            "image": "https://ipfs.io/ipfs/"+result.path,
+            "name": name,
+            "price" : price
+        }
+        const meta = await ipfs.add(JSON.stringify(metadata))
+        mintThenList(meta, price)
     }
-    const meta = await ipfs.add(JSON.stringify(metadata))
-    mintThenList(meta, price)
+    catch(err)
+    {
+
+    }
 
 }
 
 const mintThenList = async (result, price) => {
-    const uri = `https://ipfs.infura.io/ipfs/${result.path}`
-    // mint nft 
-    await(await contract.contract.nft.mint(uri)).wait()
-    // get tokenId of new nft 
-    const id = await contract.contract.nft.tokenCount()
-    // approve marketplace to spend nft
-    await(await contract.contract.nft.setApprovalForAll(contract.contract.marketplace.address, true)).wait()
-    // add nft to marketplace
-    const listingPrice = ethers.utils.parseEther(price.toString())
-    await(await contract.contract.marketplace.makeItem(contract.contract.nft.address, id, listingPrice)).wait()
+    try{
+        const uri = `https://ipfs.infura.io/ipfs/${result.path}`
+        // mint nft 
+        await(await contract.contract.nft.mint(uri)).wait()
+        // get tokenId of new nft 
+        const id = await contract.contract.nft.tokenCount()
+        // approve marketplace to spend nft
+        await(await contract.contract.nft.setApprovalForAll(contract.contract.marketplace.address, true)).wait()
+        // add nft to marketplace
+        const listingPrice = ethers.utils.parseEther(price.toString())
+        await(await contract.contract.marketplace.makeItem(contract.contract.nft.address, id, listingPrice)).wait()
+    }
+    catch(err){
+
+    }
 }
 
 app.post("/upload", async function(req, res) {
@@ -81,69 +92,96 @@ app.get("/create", function(req, res) {
     res.render("create");
 })
 
+app.get("/thankyou", function(req, res){
+    res.render("SavedNft");
+})
+
 app.get("/listed_nft", async function(req, res) {
     console.log(contract.contract.nft)
-    const totalItem = await contract.contract.marketplace.itemCount()  
-    var data = []  
-    for(var i=1; i <=totalItem; i++)
-    {
-        var item = await contract.contract.marketplace.items(i)
-        const uri = await contract.contract.nft.tokenURI(item.tokenId)
-        const response = await axios(uri);
-        const totalPrice = await contract.contract.marketplace.getTotalPrice(item.itemId)
+    var data = [] 
+    try {
+        const totalItem = await contract.contract.marketplace.itemCount()  
+        for(var i=1; i <=totalItem; i++)
+        {
+            var item = await contract.contract.marketplace.items(i)
+            const uri = await contract.contract.nft.tokenURI(item.tokenId)
+            const response = await axios(uri);
+            const totalPrice = await contract.contract.marketplace.getTotalPrice(item.itemId)
 
-        // data.push(response.data); 
-        let listItem = {
-            totalPrice : ethers.utils.formatEther(totalPrice),
-            price: item.price,
-            itemId: item.itemId,
-            name: response.data.name,
-            description: response.data.description,
-            image: response.data.image
-        } 
-        data.push(listItem)
+            // data.push(response.data); 
+            let listItem = {
+                totalPrice : ethers.utils.formatEther(totalPrice),
+                price: item.price,
+                itemId: item.itemId,
+                name: response.data.name,
+                description: response.data.description,
+                image: response.data.image
+            } 
+            data.push(listItem)
+        }
+        console.log(data)
+        res.render("ListedItems", {"data" : data});
     }
-    console.log(data)
-    res.render("ListedItems", {"data" : data});
+    catch(err)
+    {
+
+    }
 });
 
 
 app.post("/purchase", async function(req, res) {
-    var totalPrice = await contract.contract.marketplace.getTotalPrice(req.body.itemId)
-    await (await contract.contract.marketplace.purchaseItem(req.body.itemId, { value:  totalPrice})).wait()
-    res.render("SavedNft")
+     try {
+        var totalPrice = await contract.contract.marketplace.getTotalPrice(req.body.itemId)
+        await (await contract.contract.marketplace.purchaseItem(req.body.itemId, { value:  totalPrice})).wait()
+        return res.send("True")
+      } catch (err) {
+        return res.send("False")
+      }
 });
 
 app.get("/my_purchase", async function(req, res) {
-    var account = '0xe39f8f9141427A2eB583C56cadFEd966394053BB'
-    var purchasedItem = await getPurchasedItems(account)
-    console.log(purchasedItem)  
-    // res.render("my_purchases", {"purchasedItem" : purchasedItem});
-    res.render("PurchasedItem", {"purchasedItem" : purchasedItem})
+    try
+    {  
+        var account = '0xe39f8f9141427A2eB583C56cadFEd966394053BB'
+        var purchasedItem = await getPurchasedItems(account)
+        res.render("PurchasedItem", {"purchasedItem" : purchasedItem})
+    }
+    catch(err)
+    {
+
+    }
+
     
 });
 
 
 const getPurchasedItems = async (account) => {
     // Fetch purchased items from marketplace by quering Offered events with the buyer set as the user
-    const filter =  contract.contract.marketplace.filters.Bought(null,null,null,null,null,account)
-    const results = await contract.contract.marketplace.queryFilter(filter)
-    const purchases = await Promise.all(results.map(async i => {
-        var item = i.args
-        const totalPrice = await contract.contract.marketplace.getTotalPrice(item.itemId)
-        const uri = await contract.contract.nft.tokenURI(item.tokenId)
-        const response = await axios(uri);
-        let purchasedItem = {
-            totalPrice : ethers.utils.formatEther(totalPrice),
-            price: item.price,
-            itemId: item.itemId,
-            name: response.data.name,
-            description: response.data.description,
-            image: response.data.image
-          }
-        return purchasedItem
-    }))
-    return purchases
+    try{
+            const filter =  contract.contract.marketplace.filters.Bought(null,null,null,null,null,account)
+            const results = await contract.contract.marketplace.queryFilter(filter)
+            const purchases = await Promise.all(results.map(async i => {
+                var item = i.args
+                const totalPrice = await contract.contract.marketplace.getTotalPrice(item.itemId)
+                const uri = await contract.contract.nft.tokenURI(item.tokenId)
+                const response = await axios(uri);
+                let purchasedItem = {
+                    totalPrice : ethers.utils.formatEther(totalPrice),
+                    price: item.price,
+                    itemId: item.itemId,
+                    name: response.data.name,
+                    description: response.data.description,
+                    image: response.data.image
+                  }
+                return purchasedItem
+            }))
+            return purchases
+    }
+    catch(err)
+    {
+
+    }
+   
   }
 
 app.listen(process.env.PORT || 4080);

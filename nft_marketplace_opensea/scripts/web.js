@@ -34,8 +34,16 @@ $(".purchase").click(function(){
       'itemId' : parseInt($(this).parent().find("small").html()),
     }
     $.ajax({url: "/purchase", method :'POST', data : data,success: function(result){
-      debugger;
-      // alert(result)
+      if(result=="true")
+      {
+        location.replace("/thankyou")
+      }
+      else
+      {
+        location.replace("/thankyou")
+        
+        // alert("Something went wrong may be nft is already sold..!!")
+      }
     }});
 
 });

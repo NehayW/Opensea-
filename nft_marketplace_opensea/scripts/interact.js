@@ -16,6 +16,7 @@ const alchemyProvider = new ethers.providers.AlchemyProvider(network="rinkeby", 
 // signer - you
 const signer = new ethers.Wallet(PRIVATE_KEY, alchemyProvider);
 
+
 // contract instance
 const nft = new ethers.Contract(CONTRACT_ADDRESS_NFT, nft_contract.abi, signer);
 const marketplace = new ethers.Contract(CONTRACT_ADDRESS_MARKETPLACE, marketplace_contract.abi, signer);

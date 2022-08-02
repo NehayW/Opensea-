@@ -1,5 +1,7 @@
+
+
 $('#wallet').click(function(e){
-  // web3Handler()
+  debugger
   if (typeof window.ethereum !== 'undefined') {
     window.ethereum
     .request({
@@ -7,29 +9,34 @@ $('#wallet').click(function(e){
     })
     .then((accounts) => {
       console.log(accounts[0]);
-      $('#account').val(accounts[0])
+      $('#connected_account').text(accounts[0])
+       data = {
+        'connected_account' : accounts[0],
+          }
+          $.ajax({url: "/connect/metamsk", method :'POST', data : data,success: function(result){
+            location.reload()
+          }
+        });
     })
     .catch((error) => {
-      console(error)
       alert("Something went wrong");
     });
    } 
+   else{
+    alert("Metamask is not installed")
+   }
 })
 
 
-// $(".purchase").click(function(){
-//   debugger;
-//     let data = {itemId: $("itemId").text()};
-//     fetch("/purchase", {
-//       method: "POST",
-//       headers: {'Content-Type': 'application/json'}, 
-//       body: JSON.stringify(data)
-//     })
-// });
+$('#dwallet').click(function(e){
+      $.ajax({url: "/disconnect/metamsk", method :'POST',success: function(result){
+        location.replace('/')
+      }})
+
+})
 
 
 $(".purchase").click(function(){
-  debugger;
     data = {
       'itemId' : parseInt($(this).parent().find("small").html()),
     }
@@ -40,10 +47,9 @@ $(".purchase").click(function(){
       }
       else
       {
-        location.replace("/thankyou")
-        
-        // alert("Something went wrong may be nft is already sold..!!")
+        alert("Something went wrong...")
       }
+      // alert(result)
     }});
 
 });

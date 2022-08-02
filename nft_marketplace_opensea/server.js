@@ -5,7 +5,21 @@ const { ethers } = require("hardhat");
 const bodyParser = require("body-parser");
 const contract = require("./scripts/interact.js");
 const axios = require("axios");
+
 app.set('view engine', 'ejs');
+
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
+const oneDay = 1000 * 60 * 60 * 24;
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+app.use(cookieParser());
+var session;
 
 app.use('/style', express.static(path.join(__dirname, '/src/css')));
 app.use('/image', express.static(path.join(__dirname, '/src/image')));
@@ -81,23 +95,36 @@ app.post("/upload", async function(req, res) {
     var price = req.body.price
     var description = req.body.description
     await saveFile(file,fileName,price,description)
-    res.render("SavedNft");
+    res.render("SavedNft", {"session": session});
 });
 
 app.get("/", function(req, res) {
-    res.render("home");
+    res.render("home", {"session": session});
+});
+
+
+app.post("/connect/metamsk", function(req, res) {
+    session=req.session;
+    session.accountId=req.body.connected_account;
+    res.render('home', {"session": session});
+
+});
+
+app.post("/disconnect/metamsk", function(req, res) {
+    req.session.destroy();
+    session=req.session;
+    res.render('home', {"session": session});
 });
 
 app.get("/create", function(req, res) {
-    res.render("create");
+    res.render("create", {"session": session});
 })
 
 app.get("/thankyou", function(req, res){
-    res.render("SavedNft");
+    res.render("SavedNft", {"session": session});
 })
 
 app.get("/listed_nft", async function(req, res) {
-    console.log(contract.contract.nft)
     var data = [] 
     try {
         const totalItem = await contract.contract.marketplace.itemCount()  
@@ -119,8 +146,7 @@ app.get("/listed_nft", async function(req, res) {
             } 
             data.push(listItem)
         }
-        console.log(data)
-        res.render("ListedItems", {"data" : data});
+        res.render("ListedItems", {"data" : data, "session": session});
     }
     catch(err)
     {
@@ -142,13 +168,17 @@ app.post("/purchase", async function(req, res) {
 app.get("/my_purchase", async function(req, res) {
     try
     {  
-        var account = '0xe39f8f9141427A2eB583C56cadFEd966394053BB'
+        var account = session.accountId
+        console.log(account)
         var purchasedItem = await getPurchasedItems(account)
-        res.render("PurchasedItem", {"purchasedItem" : purchasedItem})
+        console.log(purchasedItem)
+        res.render("PurchasedItem", {"purchasedItem" : purchasedItem, "session": session})
+        
     }
     catch(err)
     {
-
+        console.log(err)
+        res.render("PurchasedItem", {"purchasedItem" : [], "session": session})
     }
 
     
@@ -183,6 +213,8 @@ const getPurchasedItems = async (account) => {
     }
    
   }
+
+
 
 app.listen(process.env.PORT || 4080);
 

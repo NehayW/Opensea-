@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -43,9 +43,11 @@
     "it-all": "^1.0.6",
     "jquery": "^3.6.0",
     "jsdom": "^20.0.0",
+    "mocha": "^9.2.2",
     "node-fetch": "^3.2.6",
     "node-metamask": "^1.1.2",
     "nodemon": "^2.0.18",
+    "save-dev": "^0.0.1-security",
     "to-string": "^0.2.0",
     "uint8arrays": "^3.0.0",
     "web3modal": "^1.9.8"

@@ -53,3 +53,4 @@ $(".purchase").click(function(){
     }});
 
 });
+

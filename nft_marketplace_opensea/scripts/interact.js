@@ -21,13 +21,6 @@ const signer = new ethers.Wallet(PRIVATE_KEY, alchemyProvider);
 const nft = new ethers.Contract(CONTRACT_ADDRESS_NFT, nft_contract.abi, signer);
 const marketplace = new ethers.Contract(CONTRACT_ADDRESS_MARKETPLACE, marketplace_contract.abi, signer);
 
-// console.log(nft)
-// console.log(marketplace)
-// {contract : {'nft': nft, 'marketplace' : marketplace}};
-
-// export default function nfts() {
-//   return "marketplace"
-// }
 module.exports = {contract : {'nft': nft, 'marketplace' : marketplace}};
 
 

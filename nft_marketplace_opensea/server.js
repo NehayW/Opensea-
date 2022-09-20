@@ -90,6 +90,7 @@ const mintThenList = async (result, price) => {
     }
 }
 
+// api for upload nft
 app.post("/upload", async function(req, res) {
     var file = req.files.file
     var fileName = req.body.name
@@ -125,6 +126,7 @@ app.get("/thankyou", function(req, res){
     res.render("SavedNft", {"session": session});
 })
 
+// api for list nfts which is created
 app.get("/listed_nft", async function(req, res) {
     var data = [] 
     try {
@@ -156,7 +158,7 @@ app.get("/listed_nft", async function(req, res) {
     }
 });
 
-
+// API for purchase an item
 app.post("/purchase", async function(req, res) {
      try {
         console.log(req.body.itemId)
@@ -169,6 +171,7 @@ app.post("/purchase", async function(req, res) {
       }
 });
 
+// api for get purchase Item
 app.get("/my_purchase", async function(req, res) {
     try
     {  
